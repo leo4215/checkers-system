@@ -1,7 +1,7 @@
 package boardgame;
 
 public class Board {
-    
+
     private int rows;
     private int columns;
     private Position[][] mat;
@@ -26,4 +26,3 @@ public class Board {
         return columns;
     }
 }
-

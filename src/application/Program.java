@@ -1,7 +1,10 @@
 package application;
 
+import checkers.CheckersMatch;
+
 public class Program {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        CheckersMatch checkersMatch = new CheckersMatch();
+        UI.printBoard(checkersMatch.getPositions());
     }
 }

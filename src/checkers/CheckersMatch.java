@@ -1,6 +1,7 @@
 package checkers;
 
 import boardgame.Board;
+import boardgame.Position;
 
 public class CheckersMatch {
 
@@ -28,10 +29,12 @@ public class CheckersMatch {
 
     public CheckersPosition[][] getPositions() {
         CheckersPosition[][] mat = new CheckersPosition[board.getRows()][board.getColumns()];
-
+        
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getColumns(); j++) {
-                mat[i][j] = (CheckersPosition) board.position(i, j);
+                // mat[i][j] = (CheckersPosition) board.position(i, j);
+                Position pos = board.position(i, j);
+                mat[i][j] = new CheckersPosition(pos.getRow(), pos.getColumn());
             }
         }
         return mat;

@@ -8,4 +8,7 @@ public class CheckersPosition extends Position {
         super(row, column);
     }
 
+    public CheckersPiece getCheckersPiece() {
+        return (CheckersPiece) super.getPiece();
+    }
 }

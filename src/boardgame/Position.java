@@ -4,10 +4,12 @@ public class Position {
 
     private int row;
     private int column;
+    private Piece piece;
 
     public Position(int row, int column) {
         this.row = row;
         this.column = column;
+        this.piece = null;
     }
 
     public int getRow() {
@@ -24,6 +26,10 @@ public class Position {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    protected Piece getPiece() {
+        return piece;
     }
 
     @Override

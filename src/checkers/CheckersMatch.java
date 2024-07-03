@@ -25,4 +25,15 @@ public class CheckersMatch {
     public int getTurn() {
         return turn;
     }
+
+    public CheckersPosition[][] getPositions() {
+        CheckersPosition[][] mat = new CheckersPosition[board.getRows()][board.getColumns()];
+
+        for (int i = 0; i < board.getRows(); i++) {
+            for (int j = 0; j < board.getColumns(); j++) {
+                mat[i][j] = (CheckersPosition) board.position(i, j);
+            }
+        }
+        return mat;
+    }
 }

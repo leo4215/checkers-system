@@ -1,6 +1,8 @@
 package checkers;
 
-public class CheckersPiece {
+import boardgame.Piece;
+
+public class CheckersPiece extends Piece {
 
     private Color color;
     private boolean isKing;

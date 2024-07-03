@@ -25,4 +25,12 @@ public class Board {
     public int getColumns() {
         return columns;
     }
+
+    public Position position(int row, int column) {
+        return mat[row][column];
+    }
+
+    public Position position(Position position) {
+        return mat[position.getRow()][position.getColumn()];
+    }
 }

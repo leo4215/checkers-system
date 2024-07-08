@@ -4,7 +4,7 @@ public class Position {
 
     private int row;
     private int column;
-    private Piece piece;
+    protected Piece piece;
 
     public Position(int row, int column) {
         this.row = row;
@@ -30,6 +30,10 @@ public class Position {
 
     protected Piece getPiece() {
         return piece;
+    }
+
+    protected void setPiece(Piece piece) {
+        this.piece = piece;
     }
 
     @Override

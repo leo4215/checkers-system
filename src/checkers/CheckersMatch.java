@@ -1,7 +1,6 @@
 package checkers;
 
 import boardgame.Board;
-import boardgame.Position;
 
 public class CheckersMatch {
 
@@ -13,6 +12,7 @@ public class CheckersMatch {
         this.board = new Board();
         this.turn = 0;
         this.currentPlayer = Color.WHITE;
+        initialSetup();
     }
 
     public Board getBoard() {
@@ -32,11 +32,37 @@ public class CheckersMatch {
         
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getColumns(); j++) {
-                // mat[i][j] = (CheckersPosition) board.position(i, j);
-                Position pos = board.position(i, j);
-                mat[i][j] = new CheckersPosition(pos.getRow(), pos.getColumn());
+                mat[i][j] = (CheckersPosition) board.position(i, j);
             }
         }
         return mat;
     }
+
+    public void initialSetup() {
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 0));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 2));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 4));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 6));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 1));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 3));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 5));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 7));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 0));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 2));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 4));
+        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 6));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 1));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 3));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 5));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 7));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 0));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 2));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 4));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 6));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 1));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 3));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 5));
+        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 7));
+    }
+
 }

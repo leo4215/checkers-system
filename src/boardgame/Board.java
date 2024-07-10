@@ -15,7 +15,8 @@ public class Board {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                mat[i][j] = new CheckersPosition(i, j);
+                char column = (char) ('a' + j); // Converts the column index (j) to the corresponding letter
+                mat[i][j] = new CheckersPosition(i + 1, column);
             }
         }
     }
@@ -48,7 +49,7 @@ public class Board {
     }
 
     public boolean positionExists(int row, int column) {
-        return row >= 0 && row < rows && column >= 0 && column < columns; 
+        return row >= 0 && row < rows && column >= 0 && column < columns;
     }
 
     public boolean positionExists(Position position) {

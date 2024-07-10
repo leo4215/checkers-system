@@ -29,7 +29,7 @@ public class CheckersMatch {
 
     public CheckersPosition[][] getPositions() {
         CheckersPosition[][] mat = new CheckersPosition[board.getRows()][board.getColumns()];
-        
+
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getColumns(); j++) {
                 mat[i][j] = (CheckersPosition) board.position(i, j);
@@ -38,31 +38,36 @@ public class CheckersMatch {
         return mat;
     }
 
+    public void placeNewPiece(int row, char column, CheckersPiece piece) {
+        board.placePiece(piece, new CheckersPosition(row, column));
+    }
+
     public void initialSetup() {
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 0));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 2));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 4));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(7, 6));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 1));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 3));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 5));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(6, 7));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 0));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 2));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 4));
-        board.placePiece(new CheckersPiece(Color.WHITE), new CheckersPosition(5, 6));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 1));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 3));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 5));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(0, 7));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 0));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 2));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 4));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(1, 6));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 1));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 3));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 5));
-        board.placePiece(new CheckersPiece(Color.BLACK), new CheckersPosition(2, 7));
+        placeNewPiece(8, 'a', new CheckersPiece(Color.WHITE));
+        placeNewPiece(8, 'c', new CheckersPiece(Color.WHITE));
+        placeNewPiece(8, 'e', new CheckersPiece(Color.WHITE));
+        placeNewPiece(8, 'g', new CheckersPiece(Color.WHITE));
+        placeNewPiece(7, 'b', new CheckersPiece(Color.WHITE));
+        placeNewPiece(7, 'd', new CheckersPiece(Color.WHITE));
+        placeNewPiece(7, 'f', new CheckersPiece(Color.WHITE));
+        placeNewPiece(7, 'h', new CheckersPiece(Color.WHITE));
+        placeNewPiece(6, 'a', new CheckersPiece(Color.WHITE));
+        placeNewPiece(6, 'c', new CheckersPiece(Color.WHITE));
+        placeNewPiece(6, 'e', new CheckersPiece(Color.WHITE));
+        placeNewPiece(6, 'g', new CheckersPiece(Color.WHITE));
+
+        placeNewPiece(1, 'b', new CheckersPiece(Color.BLACK));
+        placeNewPiece(1, 'd', new CheckersPiece(Color.BLACK));
+        placeNewPiece(1, 'f', new CheckersPiece(Color.BLACK));
+        placeNewPiece(1, 'h', new CheckersPiece(Color.BLACK));
+        placeNewPiece(2, 'a', new CheckersPiece(Color.BLACK));
+        placeNewPiece(2, 'c', new CheckersPiece(Color.BLACK));
+        placeNewPiece(2, 'e', new CheckersPiece(Color.BLACK));
+        placeNewPiece(2, 'g', new CheckersPiece(Color.BLACK));
+        placeNewPiece(3, 'b', new CheckersPiece(Color.BLACK));
+        placeNewPiece(3, 'd', new CheckersPiece(Color.BLACK));
+        placeNewPiece(3, 'f', new CheckersPiece(Color.BLACK));
+        placeNewPiece(3, 'h', new CheckersPiece(Color.BLACK));
     }
 
 }

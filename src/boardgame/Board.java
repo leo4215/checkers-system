@@ -1,5 +1,6 @@
 package boardgame;
 
+import checkers.CheckersException;
 import checkers.CheckersPosition;
 
 public class Board {
@@ -46,6 +47,19 @@ public class Board {
     public void placePiece(Piece piece, Position position) {
         position.setPiece(piece);
         mat[position.getRow()][position.getColumn()] = position;
+    }
+
+    public Piece removePiece(Position position) {
+        if (!positionExists(position)) {
+            throw new BoardException("Position not on the board");
+        }
+        if (position.getPiece() == null) {
+            return null;
+        }
+
+        Piece p = mat[position.getRow()][position.getColumn()].getPiece();
+        mat[position.getRow()][position.getColumn()].setPiece(null);
+        return p;
     }
 
     public boolean positionExists(int row, int column) {

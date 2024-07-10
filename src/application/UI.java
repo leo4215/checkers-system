@@ -1,5 +1,8 @@
 package application;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import checkers.CheckersPosition;
 import checkers.Color;
 
@@ -24,6 +27,17 @@ public class UI {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+    public static CheckersPosition readCheckersPosition(Scanner sc) {
+        try {
+            String s = sc.nextLine();
+            int row = Integer.parseInt(s.substring(0 , 1));
+            char column = s.charAt(1);
+            return new CheckersPosition(row, column);
+        } catch (RuntimeException e) {
+            throw new InputMismatchException("Error reading CheckersPosition. Valid values are from 1a to 8h");
+        }
+    }
 
     public static void printBoard(CheckersPosition[][] mat) {
         for (int i = 0; i < mat.length; i++) {

@@ -20,6 +20,14 @@ public class CheckersPosition extends Position {
         return (CheckersPiece) super.getPiece();
     }
 
+    protected Position toPosition() {
+        return new Position(8 - row, column - 'a');
+    }
+
+    protected static CheckersPosition fromPosition(Position position) {
+        return new CheckersPosition(8 - position.getRow(), (char)('a' - position.getColumn()));
+    }
+
     @Override
     public String toString() {
         return "" + row + column;

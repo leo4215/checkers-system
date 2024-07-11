@@ -43,6 +43,13 @@ public class Board {
         return mat[position.getRow()][position.getColumn()];
     }
 
+    public Piece piece(int row, int column) {
+        if (!positionExists(row, column)) {
+            throw new BoardException("Position not on the board");
+        }
+        return mat[row][column].getPiece();
+    }
+
     public void placePiece(Piece piece, Position position) {
         position.setPiece(piece);
         mat[position.getRow()][position.getColumn()] = position;

@@ -1,5 +1,6 @@
 package checkers;
 
+import boardgame.Board;
 import boardgame.Piece;
 
 public class CheckersPiece extends Piece {
@@ -7,7 +8,8 @@ public class CheckersPiece extends Piece {
     private Color color;
     private boolean isKing;
 
-    public CheckersPiece(Color color) {
+    public CheckersPiece(Board board, Color color) {
+        super(board);
         this.color = color;
         this.isKing = false;
     }
@@ -26,6 +28,12 @@ public class CheckersPiece extends Piece {
 
     public void setKing(boolean isKing) {
         this.isKing = isKing;
+    }
+
+    @Override
+    public boolean[][] possibleMoves() {
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        return mat;
     }
 
     @Override

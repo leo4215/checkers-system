@@ -1,6 +1,5 @@
 package boardgame;
 
-import checkers.CheckersException;
 import checkers.CheckersPosition;
 
 public class Board {

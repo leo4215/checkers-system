@@ -2,6 +2,7 @@ package checkers;
 
 import boardgame.Board;
 import boardgame.Piece;
+import boardgame.Position;
 
 public class CheckersPiece extends Piece {
 
@@ -30,9 +31,55 @@ public class CheckersPiece extends Piece {
         this.isKing = isKing;
     }
 
+    // private boolean isThereOpponentPiece(Position position) {
+    //     CheckersPiece p = (CheckersPiece) getBoard().piece(position.getRow(), position.getColumn());
+    //     return p != null && p.getColor() != color;
+    // }
+
     @Override
     public boolean[][] possibleMoves() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+
+        Position p = new Position(0, 0);
+
+        if (isKing()) {
+            p.setValues(getBoard().position(this).getRow() - 1, getBoard().position(this).getColumn() - 1);
+            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                mat[p.getRow()][p.getColumn()] = true;
+            }
+            p.setValues(getBoard().position(this).getRow() - 1, getBoard().position(this).getColumn() + 1);
+            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                mat[p.getRow()][p.getColumn()] = true;
+            }
+            p.setValues(getBoard().position(this).getRow() + 1, getBoard().position(this).getColumn() - 1);
+            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                mat[p.getRow()][p.getColumn()] = true;
+            }
+            p.setValues(getBoard().position(this).getRow() + 1, getBoard().position(this).getColumn() + 1);
+            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                mat[p.getRow()][p.getColumn()] = true;
+            }
+        } else {
+            if (getColor() == Color.WHITE) {
+                p.setValues(getBoard().position(this).getRow() - 1, getBoard().position(this).getColumn() - 1);
+                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                    mat[p.getRow()][p.getColumn()] = true;
+                }
+                p.setValues(getBoard().position(this).getRow() - 1, getBoard().position(this).getColumn() + 1);
+                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                    mat[p.getRow()][p.getColumn()] = true;
+                }
+            } else {
+                p.setValues(getBoard().position(this).getRow() + 1, getBoard().position(this).getColumn() - 1);
+                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                    mat[p.getRow()][p.getColumn()] = true;
+                }
+                p.setValues(getBoard().position(this).getRow() + 1, getBoard().position(this).getColumn() + 1);
+                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
+                    mat[p.getRow()][p.getColumn()] = true;
+                }
+            }
+        }
         return mat;
     }
 

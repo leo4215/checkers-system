@@ -43,6 +43,17 @@ public class Board {
         return mat[position.getRow()][position.getColumn()];
     }
 
+    public Position position(Piece piece) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (mat[i][j].getPiece() != null && mat[i][j].getPiece().equals(piece)) {
+                    return mat[i][j];
+                }
+            }
+        }
+        return null;
+    }
+
     public Piece piece(int row, int column) {
         if (!positionExists(row, column)) {
             throw new BoardException("Position not on the board");

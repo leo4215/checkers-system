@@ -44,6 +44,7 @@ public class CheckersMatch {
         Position source = board.position(sourcePosition.toPosition());
         Position target = board.position(targetPosition.toPosition());
         validateSourcePosition(source);
+        validateTargetPosition(source, target);
         makeMove(source, target);
     }
 
@@ -61,6 +62,12 @@ public class CheckersMatch {
         }
         if (!board.piece(position.getRow(), position.getColumn()).isThereAnyPossibleMove()) {
             throw new CheckersException("There is no possible move for the chosen piece.");
+        }
+    }
+
+    private void validateTargetPosition(Position source, Position target) {
+        if (!board.piece(source.getRow(), source.getColumn()).possibleMove(target)) {
+            throw new CheckersException("The chosen piece can't move to target position");
         }
     }
 

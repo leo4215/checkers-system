@@ -28,15 +28,15 @@ public class Position {
         this.column = column;
     }
 
-    protected Piece getPiece() {
+    protected Piece getPiece() { // Returns a Piece located at this position. Accessed only within the board layer. 
         return piece;
     }
 
-    protected void setPiece(Piece piece) {
+    protected void setPiece(Piece piece) { // Sets a Piece at this position. Accessed only within the board layer.
         this.piece = piece;
     }
 
-    public void setValues(int row, int column) {
+    public void setValues(int row, int column) { // Sets new row and column values to a position. 
         this.row = row;
         this.column = column;
     }

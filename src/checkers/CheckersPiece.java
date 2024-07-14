@@ -37,7 +37,7 @@ public class CheckersPiece extends Piece {
     // }
 
     @Override
-    public boolean[][] possibleMoves() {
+    public boolean[][] possibleMoves() { // Determines the possible moves for this piece
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
         Position p = new Position(0, 0);

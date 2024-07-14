@@ -29,7 +29,7 @@ public class CheckersMatch {
         return turn;
     }
 
-    public CheckersPosition[][] getPositions() {
+    public CheckersPosition[][] getPositions() { // Downcasting matrix of positions on the board from type Position to type CheckersPosition
         CheckersPosition[][] mat = new CheckersPosition[board.getRows()][board.getColumns()];
 
         for (int i = 0; i < board.getRows(); i++) {
@@ -40,7 +40,7 @@ public class CheckersMatch {
         return mat;
     }
 
-    public void performCheckersMove(CheckersPosition sourcePosition, CheckersPosition targetPosition) {
+    public void performCheckersMove(CheckersPosition sourcePosition, CheckersPosition targetPosition) { // Handles the game logic by executing a move from the source to the target position
         Position source = board.position(sourcePosition.toPosition());
         Position target = board.position(targetPosition.toPosition());
         validateSourcePosition(source);
@@ -48,7 +48,7 @@ public class CheckersMatch {
         makeMove(source, target);
     }
 
-    public void makeMove(Position source, Position target) {
+    public void makeMove(Position source, Position target) {  // Makes a move by placing a piece from source to target position
         if (board.hasPiece(target)) {
             throw new CheckersException("There already is a piece on target position");    
         }
@@ -56,7 +56,7 @@ public class CheckersMatch {
         board.placePiece(p, target);
     }
 
-    private void validateSourcePosition(Position position) {
+    private void validateSourcePosition(Position position) { // Validates the source position, ensuring there is a piece at the source and that it has possible moves
         if (!board.hasPiece(position)) {
             throw new CheckersException("There is no piece on source position.");
         }
@@ -65,7 +65,7 @@ public class CheckersMatch {
         }
     }
 
-    private void validateTargetPosition(Position source, Position target) {
+    private void validateTargetPosition(Position source, Position target) { // Validates the target position by ensuring it is a valid move from the source position
         if (!board.piece(source.getRow(), source.getColumn()).possibleMove(target)) {
             throw new CheckersException("The chosen piece can't move to target position");
         }
@@ -75,7 +75,7 @@ public class CheckersMatch {
         board.placePiece(piece, new CheckersPosition(row, column));
     }
 
-    public void initialSetup() {
+    public void initialSetup() { // Sets up the initial board configuration
         placeNewPiece(8, 'a', new CheckersPiece(board, Color.WHITE));
         placeNewPiece(8, 'c', new CheckersPiece(board, Color.WHITE));
         placeNewPiece(8, 'e', new CheckersPiece(board, Color.WHITE));

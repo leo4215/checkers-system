@@ -49,20 +49,35 @@ public class UI {
         for (int i = 0; i < mat.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < mat.length; j++) {
-                System.out.print(printPosition(mat[i][j]));
+                printPosition(mat[i][j], false);
             }
             System.out.println();
         }
-        System.out.println("   a b c d e f g h");
+        System.out.println("  a b c d e f g h");
     }
 
-    public static String printPosition(CheckersPosition position) {
-        if (position.getCheckersPiece() == null) {
-            return " -";
-        } else if (position.getCheckersPiece().getColor() == Color.WHITE) {
-            return " " + ANSI_WHITE + position.getCheckersPiece() + ANSI_RESET;
-        } else {
-            return " " + ANSI_YELLOW + position.getCheckersPiece() + ANSI_RESET;
+    public static void printBoard(CheckersPosition[][] mat, boolean[][] possibleMoves) {
+        for (int i = 0; i < mat.length; i++) {
+            System.out.print((8 - i) + " ");
+            for (int j = 0; j < mat.length; j++) {
+                printPosition(mat[i][j], possibleMoves[i][j]);
+            }
+            System.out.println();
         }
+        System.out.println("  a b c d e f g h");
+    }
+
+    public static void printPosition(CheckersPosition position, boolean background) {
+        if (background) {
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
+        if (position.getCheckersPiece() == null) {
+            System.out.print("-" + ANSI_RESET);
+        } else if (position.getCheckersPiece().getColor() == Color.WHITE) {
+            System.out.print(ANSI_WHITE + position.getCheckersPiece() + ANSI_RESET);
+        } else {
+            System.out.print(ANSI_YELLOW + position.getCheckersPiece() + ANSI_RESET);
+        }
+        System.out.print(" ");
     }
 }

@@ -40,6 +40,12 @@ public class CheckersMatch {
         return mat;
     }
 
+    public boolean[][] possibleMoves(CheckersPosition sourcePosition) {
+        Position position = board.position(sourcePosition.toPosition());
+        validateSourcePosition(position);
+        return board.piece(position.getRow(), position.getColumn()).possibleMoves();
+    }
+
     public void performCheckersMove(CheckersPosition sourcePosition, CheckersPosition targetPosition) { // Handles the game logic by executing a move from the source to the target position
         Position source = board.position(sourcePosition.toPosition());
         Position target = board.position(targetPosition.toPosition());

@@ -12,7 +12,7 @@ public class CheckersMatch {
 
     public CheckersMatch() {
         this.board = new Board();
-        this.turn = 0;
+        this.turn = 1;
         this.currentPlayer = Color.WHITE;
         initialSetup();
     }
@@ -51,6 +51,7 @@ public class CheckersMatch {
         Position target = board.position(targetPosition.toPosition());
         validateSourcePosition(source);
         validateTargetPosition(source, target);
+        nextTurn();
         makeMove(source, target);
     }
 
@@ -62,12 +63,20 @@ public class CheckersMatch {
         board.placePiece(p, target);
     }
 
+    private void nextTurn() {
+        turn++;
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
+
     private void validateSourcePosition(Position position) { // Validates the source position, ensuring there is a piece at the source and that it has possible moves
         if (!board.hasPiece(position)) {
-            throw new CheckersException("There is no piece on source position.");
+            throw new CheckersException("There is no piece on source position");
+        }
+        if (currentPlayer != ((CheckersPiece) board.piece(position.getRow(), position.getColumn())).getColor()) {
+            throw new CheckersException("The chosen piece is not yours");
         }
         if (!board.piece(position.getRow(), position.getColumn()).isThereAnyPossibleMove()) {
-            throw new CheckersException("There is no possible move for the chosen piece.");
+            throw new CheckersException("There is no possible move for the chosen piece");
         }
     }
 

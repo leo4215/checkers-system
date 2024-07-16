@@ -19,10 +19,6 @@ public class CheckersPiece extends Piece {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public boolean isKing() {
         return isKing;
     }

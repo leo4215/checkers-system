@@ -1,5 +1,8 @@
 package checkers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
@@ -9,16 +12,18 @@ public class CheckersMatch {
     private Board board;
     private Color currentPlayer;
     private int turn;
+    private int whiteCapturedPieces;
+    private int blackCapturedPieces;
+
+    private List<Position> capturedPiecesPos = new ArrayList<>();
 
     public CheckersMatch() {
         this.board = new Board();
         this.turn = 1;
+        this.whiteCapturedPieces = 0;
+        this.blackCapturedPieces = 0;
         this.currentPlayer = Color.WHITE;
         initialSetup();
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public Color getCurrentPlayer() {
@@ -27,6 +32,14 @@ public class CheckersMatch {
 
     public int getTurn() {
         return turn;
+    }
+
+    public int getWhiteCapturedPieces() {
+        return whiteCapturedPieces;
+    }
+
+    public int getBlackCapturedPieces() {
+        return blackCapturedPieces;
     }
 
     public CheckersPosition[][] getPositions() { // Downcasting matrix of positions on the board from type Position to type CheckersPosition
@@ -51,16 +64,36 @@ public class CheckersMatch {
         Position target = board.position(targetPosition.toPosition());
         validateSourcePosition(source);
         validateTargetPosition(source, target);
-        nextTurn();
         makeMove(source, target);
+        nextTurn();
     }
 
-    public void makeMove(Position source, Position target) {  // Makes a move by placing a piece from source to target position
+    public void makeMove(Position source, Position target) { // Makes a move by placing a piece from source to target position and removing captured pieces
         if (board.hasPiece(target)) {
-            throw new CheckersException("There already is a piece on target position");    
+            throw new CheckersException("There already is a piece on target position");
         }
+
         Piece p = board.removePiece(source);
         board.placePiece(p, target);
+
+        for (Position capturePos : capturedPiecesPos) {
+            if (capturePos != null) {
+                CheckersPiece capturedPiece = (CheckersPiece) board.piece(capturePos.getRow(), capturePos.getColumn());
+                if (capturedPiece != null) {
+                    if (capturedPiece.getColor() == Color.WHITE) {
+                        whiteCapturedPieces++;
+                    } else if (capturedPiece.getColor() == Color.BLACK) {
+                        blackCapturedPieces++;
+                    }
+                    board.removePiece(capturePos);
+                }
+            }
+        }
+        capturedPiecesPos.clear();
+    }
+
+    protected void addCapturedPiece(Position position) {
+        capturedPiecesPos.add(position);
     }
 
     private void nextTurn() {
@@ -91,30 +124,30 @@ public class CheckersMatch {
     }
 
     public void initialSetup() { // Sets up the initial board configuration
-        placeNewPiece(8, 'a', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(8, 'c', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(8, 'e', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(8, 'g', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(7, 'b', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(7, 'd', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(7, 'f', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(7, 'h', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(6, 'a', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(6, 'c', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(6, 'e', new CheckersPiece(board, Color.WHITE));
-        placeNewPiece(6, 'g', new CheckersPiece(board, Color.WHITE));
+        placeNewPiece(8, 'a', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(8, 'c', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(8, 'e', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(8, 'g', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(7, 'b', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(7, 'd', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(7, 'f', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(7, 'h', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(6, 'a', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(6, 'c', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(6, 'e', new CheckersPiece(board, Color.WHITE, this));
+        placeNewPiece(6, 'g', new CheckersPiece(board, Color.WHITE, this));
 
-        placeNewPiece(1, 'b', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(1, 'd', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(1, 'f', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(1, 'h', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(2, 'a', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(2, 'c', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(2, 'e', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(2, 'g', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(3, 'b', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(3, 'd', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(3, 'f', new CheckersPiece(board, Color.BLACK));
-        placeNewPiece(3, 'h', new CheckersPiece(board, Color.BLACK));
+        placeNewPiece(1, 'b', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(1, 'd', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(1, 'f', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(1, 'h', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(2, 'a', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(2, 'c', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(2, 'e', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(2, 'g', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(3, 'b', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(3, 'd', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(3, 'f', new CheckersPiece(board, Color.BLACK, this));
+        placeNewPiece(3, 'h', new CheckersPiece(board, Color.BLACK, this));
     }
 }

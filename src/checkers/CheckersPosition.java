@@ -25,7 +25,7 @@ public class CheckersPosition extends Position {
     }
 
     protected static CheckersPosition fromPosition(Position position) { // Converts a board game position to a checkers position
-        return new CheckersPosition(8 - position.getRow(), (char)('a' - position.getColumn()));
+        return new CheckersPosition(8 - position.getRow(), (char)('a' + position.getColumn()));
     }
 
     @Override

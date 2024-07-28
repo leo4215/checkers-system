@@ -8,11 +8,13 @@ public class CheckersPiece extends Piece {
 
     private Color color;
     private boolean isKing;
+    private CheckersMatch match;
 
-    public CheckersPiece(Board board, Color color) {
+    public CheckersPiece(Board board, Color color, CheckersMatch match) {
         super(board);
         this.color = color;
         this.isKing = false;
+        this.match = match;
     }
 
     public Color getColor() {
@@ -27,55 +29,52 @@ public class CheckersPiece extends Piece {
         this.isKing = isKing;
     }
 
-    // private boolean isThereOpponentPiece(Position position) {
-    //     CheckersPiece p = (CheckersPiece) getBoard().piece(position.getRow(), position.getColumn());
-    //     return p != null && p.getColor() != color;
-    // }
+    private boolean isThereOpponentPiece(Position position) {
+        CheckersPiece p = (CheckersPiece) getBoard().piece(position.getRow(), position.getColumn());
+        return p != null && p.getColor() != color;
+    }
 
     @Override
-    public boolean[][] possibleMoves() { // Determines the possible moves for this piece
+    public boolean[][] possibleMoves() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        Position sourcePos = getBoard().position(this);
 
-        Position currentPos = getBoard().position(this);
-        Position p = new Position(0, 0);
-
+        int[][] directions;
         if (isKing()) {
-            p.setValues(currentPos.getRow() - 1, currentPos.getColumn() - 1);
-            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                mat[p.getRow()][p.getColumn()] = true;
-            }
-            p.setValues(currentPos.getRow() - 1, currentPos.getColumn() + 1);
-            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                mat[p.getRow()][p.getColumn()] = true;
-            }
-            p.setValues(currentPos.getRow() + 1, currentPos.getColumn() - 1);
-            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                mat[p.getRow()][p.getColumn()] = true;
-            }
-            p.setValues(currentPos.getRow() + 1, currentPos.getColumn() + 1);
-            if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                mat[p.getRow()][p.getColumn()] = true;
-            }
+            directions = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
+        } else if (getColor() == Color.WHITE) {
+            directions = new int[][] { { -1, -1 }, { -1, 1 } };
         } else {
-            if (getColor() == Color.WHITE) {
-                p.setValues(currentPos.getRow() - 1, currentPos.getColumn() - 1);
-                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                    mat[p.getRow()][p.getColumn()] = true;
+            directions = new int[][] { { 1, -1 }, { 1, 1 } };
+        }
+
+        boolean hasCapture = false;
+        boolean[][] captureMoves = new boolean[getBoard().getRows()][getBoard().getColumns()];
+
+        for (int[] direction : directions) {
+            int row = sourcePos.getRow() + direction[0];
+            int col = sourcePos.getColumn() + direction[1];
+
+            if (getBoard().positionExists(row, col)) {
+                Position simpleMoveTarget = getBoard().position(row, col);
+                if (!getBoard().hasPiece(simpleMoveTarget) && !hasCapture) {
+                    mat[row][col] = true;
                 }
-                p.setValues(currentPos.getRow() - 1, currentPos.getColumn() + 1);
-                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                    mat[p.getRow()][p.getColumn()] = true;
-                }
-            } else {
-                p.setValues(currentPos.getRow() + 1, currentPos.getColumn() - 1);
-                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                    mat[p.getRow()][p.getColumn()] = true;
-                }
-                p.setValues(currentPos.getRow() + 1, currentPos.getColumn() + 1);
-                if (getBoard().positionExists(p) && !getBoard().hasPiece(p)) {
-                    mat[p.getRow()][p.getColumn()] = true;
+
+                int jumpRow = row + direction[0];
+                int jumpCol = col + direction[1];
+                if (getBoard().positionExists(jumpRow, jumpCol)) {
+                    Position captureTarget = getBoard().position(jumpRow, jumpCol);
+                    if (isThereOpponentPiece(simpleMoveTarget) && !getBoard().hasPiece(captureTarget)) {
+                        hasCapture = true;
+                        captureMoves[jumpRow][jumpCol] = true;
+                        match.addCapturedPiece(simpleMoveTarget);
+                    }
                 }
             }
+        }
+        if (hasCapture) {
+            return captureMoves;
         }
         return mat;
     }

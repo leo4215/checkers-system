@@ -49,6 +49,8 @@ public class UI {
     public static void printMatch(CheckersMatch match) {
         printBoard(match.getPositions());
         System.out.println();
+        printCapturedPieces(match);
+        System.out.println();
         System.out.println("Turn: " + match.getTurn());
         System.out.println("Waiting player: " + match.getCurrentPlayer());
     } 
@@ -87,5 +89,17 @@ public class UI {
             System.out.print(ANSI_YELLOW + position.getCheckersPiece() + ANSI_RESET);
         }
         System.out.print(" ");
+    }
+
+    public static void printCapturedPieces(CheckersMatch match) {
+        System.out.println("Captured pieces: ");
+        System.out.print("White: ");
+        System.out.print(ANSI_WHITE);
+        System.out.println(match.getWhiteCapturedPieces());
+        System.out.print(ANSI_RESET);
+        System.out.print("Black: ");
+        System.out.print(ANSI_YELLOW);
+        System.out.println(match.getBlackCapturedPieces());
+        System.out.print(ANSI_RESET);
     }
 }
